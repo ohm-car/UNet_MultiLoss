@@ -7,6 +7,7 @@ import random
 # from unet.unet_model_k import UNet
 from unet.unet_model_keras import UNet
 from utils.k_dataset import OxfordPets
+from utils.percLoss1 import percLoss
 # import skimage
 from pathlib import Path
 
@@ -59,15 +60,19 @@ train_gen = OxfordPets(
 )
 val_gen = OxfordPets(batch_size, img_size, val_input_img_paths, val_target_img_paths)
 
-model = UNet().create_model()
+model = UNet().build_model()
 # model = UNet.get_model(img_size = img_size, num_classes = num_classes)
 
 # Configure the model for training.
 # We use the "sparse" version of categorical_crossentropy
 # because our target data is integers.
 # model.compile(optimizer="rmsprop", loss=tf.keras.losses.SparseCategoricalCrossentropy())
+
+losses = { "image_output" : tf.keras.losses.MeanSquaredError(),
+            "mask_output" : percLoss()}
+
 model.compile(optimizer=tf.keras.optimizers.Adam(),
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+                  loss=losses,
                   metrics="accuracy")
 
 callbacks = [

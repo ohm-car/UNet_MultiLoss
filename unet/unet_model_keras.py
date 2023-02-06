@@ -75,28 +75,32 @@ class UNet(object):
 		# outputs = layers.Conv2D(3, 1, padding="same", activation = "softmax")(u9)
 
 		# unet model with Keras Functional API
-		# unet_model = tf.keras.Model(inputs, outputs, name="U-Net")
+		unet_sub_model = tf.keras.Model(inputs, u9, name="U-Net")
 
-		# return unet_model
-		return u9
+		# print(unet_sub_model.summary())
 
-	def get_reconstructed_output_image(self):
+		return unet_sub_model
+		# return u9
 
-		image = layers.Conv2D(3, 1, padding = "same", activation = "sigmoid", name = "image_output")
+	def get_reconstructed_output_image(self, out1):
+
+		image = layers.Conv2D(3, 1, padding = "same", activation = "sigmoid", name = "image_output")(out1)
 		return image
 
-	def get_percentages_output(self):
+	def get_percentages_output(self, out1):
 		
-		mask = layers.Conv2D(2, 1, padding = "same", activation = "softmax", name = "mask_output")
+		mask = layers.Conv2D(1, 1, padding = "same", activation = "softmax", name = "mask_output")(out1)
 		return mask
 
 	def build_model(self):
 
-		inputImg = self.create_common_submodel()
-		image = self.get_reconstructed_output_image()
-		mask = self.get_percentages_output()
-		unet_model = tf.keras.Model(inputs = inputImg, outputs = [image, mask],
+		inputs = layers.Input(shape=(160,160,3))
+		unet_sub_model = self.create_common_submodel()
+		image = self.get_reconstructed_output_image(unet_sub_model(inputs))
+		mask = self.get_percentages_output(unet_sub_model(inputs))
+		unet_model = tf.keras.Model(inputs = inputs, outputs = [image, mask],
 			name = "UNetMultiLoss")
+		# print(unet_model.summary())
 
 		return unet_model
 

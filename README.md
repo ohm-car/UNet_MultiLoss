@@ -113,4 +113,3 @@ Personalized support for issues with this repository, or integrating with your o
 Original paper by Olaf Ronneberger, Philipp Fischer, Thomas Brox: [https://arxiv.org/abs/1505.04597](https://arxiv.org/abs/1505.04597)
 
 ![network architecture](https://i.imgur.com/jeDVpqF.png)
-# UNet_MultiLoss
