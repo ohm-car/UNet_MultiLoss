@@ -37,7 +37,7 @@ class OxfordPets(tf.keras.utils.Sequence):
         #     y[j] = np.expand_dims(img, 2)
         #     # Ground truth labels are 1, 2, 3. Subtract one to make them 0, 1, 2:
         #     y[j] -= 1
-        y = np.zeros((self.batch_size,)  + (1,), dtype="float32")
+        y = np.zeros((self.batch_size,)  + (1,1), dtype="float32")
         for j, path in enumerate(batch_target_img_paths):
             # img = load_img(path, target_size=self.img_size, color_mode="grayscale")
             # y[j] = np.expand_dims(img, 2)

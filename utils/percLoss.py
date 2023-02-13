@@ -58,4 +58,4 @@ class percLoss(tf.keras.losses.Loss):
 
 		# tf.print("Batch MAE:", mae(y_true, y_pred))
 
-		return mae(y_true, y_pred)
+		return mae(y_true[:,:,0], y_pred)
