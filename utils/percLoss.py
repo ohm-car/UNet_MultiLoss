@@ -17,11 +17,11 @@ class percLoss(tf.keras.losses.Loss):
 
 		# percTrue = tf.constant([[0.8]])
 		# percTrue = y_true
-		tf.print("y_pred shape:", y_pred.shape)
-		tf.print("y_true shape:", y_true.shape)
+		# tf.print("y_pred shape:", y_pred.shape)
+		# tf.print("y_true shape:", y_true.shape)
 		# tf.print("y_true[0] shape:", y_true[0].shape)
 
-		tf.print("y_true:", y_true)
+		# tf.print("y_true:", y_true)
 
 		# y_predA = y_pred[:,:,:,0]
 
@@ -45,7 +45,9 @@ class percLoss(tf.keras.losses.Loss):
 
 		# percPred = tf.constant([[0.8],[0.8],[0.8],[0.8]])
 
-		y_pred = tf.cast(tf.reduce_sum(tf.cast(tf.math.greater(y_pred[:,:,:,0], tf.constant([0.9])), dtype=tf.int32), axis = [1,2]), dtype=tf.float32) / tf.cast(tf.size(y_pred[:,:,:,0]), dtype=tf.float32)
+		# y_pred = tf.cast(tf.reduce_sum(tf.cast(tf.math.greater(y_pred[:,:,:,0], tf.constant([0.9])), dtype=tf.int32), axis = [1,2]), dtype=tf.float32) / tf.cast(tf.size(y_pred[:,:,:,0]), dtype=tf.float32)
+
+		y_pred = tf.cast(tf.reduce_sum(y_pred[:,:,:,0], axis = [1,2]), dtype=tf.float32) / tf.cast(tf.size(y_pred[:,:,:,0]), dtype=tf.float32)
 
 		# percPred2 = tf.cast(tf.reduce_sum(y_predB), dtype=tf.float32) / tf.cast(tf.size(y_predB), dtype=tf.float32)
 		# tf.print("PercPred:", percPred)
@@ -54,6 +56,6 @@ class percLoss(tf.keras.losses.Loss):
 
 		mae = tf.keras.losses.MeanAbsoluteError()
 
-		tf.print("Batch MAE:", mae(y_true, y_pred))
+		# tf.print("Batch MAE:", mae(y_true, y_pred))
 
 		return mae(y_true, y_pred)
