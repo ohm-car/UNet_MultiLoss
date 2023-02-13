@@ -7,7 +7,7 @@ import random
 # from unet.unet_model_k import UNet
 from unet.unet_model_keras import UNet
 from utils.k_dataset import OxfordPets
-from utils.percLoss1 import percLoss
+from utils.percLoss import percLoss
 # import skimage
 from pathlib import Path
 
@@ -19,6 +19,7 @@ imageDir = os.path.join(rootDir.parent, 'data/images')
 masksDir = os.path.join(rootDir.parent, 'data/annotations/trimaps')
 # checkpoint_path = os.path.join(rootDir, 'checkpoints/model_{epoch:03d}')
 checkpoint_path = os.path.join(rootDir, 'checkpointsUNet/model_{epoch:03d}')
+percCsvPath = os.path.join(rootDir.parent, 'data/percs.csv')
 
 # imageDir = '/nfs/ada/oates/users/omkark1/ArteryProj/data/Img_All_Squared/'
 # masksDir = '/nfs/ada/oates/users/omkark1/ArteryProj/data/Masks_All_Squared/'
@@ -48,17 +49,15 @@ random.Random(1337).shuffle(input_img_paths)
 random.Random(1337).shuffle(target_img_paths)
 img_size = (160, 160)
 num_classes = 3
-batch_size = 8
+batch_size = 16
 train_input_img_paths = input_img_paths[:-val_samples]
 train_target_img_paths = target_img_paths[:-val_samples]
 val_input_img_paths = input_img_paths[-val_samples:]
 val_target_img_paths = target_img_paths[-val_samples:]
 
 # Instantiate data Sequences for each split
-train_gen = OxfordPets(
-    batch_size, img_size, train_input_img_paths, train_target_img_paths
-)
-val_gen = OxfordPets(batch_size, img_size, val_input_img_paths, val_target_img_paths)
+train_gen = OxfordPets(batch_size, img_size, train_input_img_paths, train_target_img_paths, percCsvPath)
+val_gen = OxfordPets(batch_size, img_size, val_input_img_paths, val_target_img_paths, percCsvPath)
 
 model = UNet().build_model()
 # model = UNet.get_model(img_size = img_size, num_classes = num_classes)

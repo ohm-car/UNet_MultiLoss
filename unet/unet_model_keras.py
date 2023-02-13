@@ -89,7 +89,7 @@ class UNet(object):
 
 	def get_percentages_output(self, out1):
 		
-		mask = layers.Conv2D(1, 1, padding = "same", activation = "softmax", name = "mask_output")(out1)
+		mask = layers.Conv2D(2, 1, padding = "same", activation = "softmax", name = "mask_output")(out1)
 		return mask
 
 	def build_model(self):
