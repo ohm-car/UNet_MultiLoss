@@ -15,8 +15,8 @@ from pathlib import Path
 rootDir = Path(__file__).parent
 print(rootDir)
 
-imageDir = os.path.join(rootDir.parent, 'images')
-masksDir = os.path.join(rootDir.parent, 'annotations/trimaps')
+imageDir = os.path.join(rootDir.parent, 'data/images')
+masksDir = os.path.join(rootDir.parent, 'data/annotations/trimaps')
 # checkpoint_path = os.path.join(rootDir, 'checkpoints/model_{epoch:03d}')
 checkpoint_path = os.path.join(rootDir, 'checkpointsUNet/model_{epoch:03d}')
 
@@ -48,7 +48,7 @@ random.Random(1337).shuffle(input_img_paths)
 random.Random(1337).shuffle(target_img_paths)
 img_size = (160, 160)
 num_classes = 3
-batch_size = 16
+batch_size = 8
 train_input_img_paths = input_img_paths[:-val_samples]
 train_target_img_paths = target_img_paths[:-val_samples]
 val_input_img_paths = input_img_paths[-val_samples:]
