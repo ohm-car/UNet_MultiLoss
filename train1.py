@@ -49,7 +49,7 @@ random.Random(1337).shuffle(input_img_paths)
 random.Random(1337).shuffle(target_img_paths)
 img_size = (160, 160)
 num_classes = 3
-batch_size = 8
+batch_size = 6
 train_input_img_paths = input_img_paths[:-val_samples]
 train_target_img_paths = target_img_paths[:-val_samples]
 val_input_img_paths = input_img_paths[-val_samples:]
