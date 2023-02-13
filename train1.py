@@ -51,7 +51,7 @@ random.Random(1337).shuffle(target_img_paths)
 img_size = (160, 160)
 num_classes = 3
 print(platform.uname().node)
-batch_size = (96 if platform.uname().node == 'ada' else 12)
+batch_size = (96 if platform.uname().node == 'g12' or platform.uname().node == 'g13' else 12)
 print(batch_size)
 train_input_img_paths = input_img_paths[:-val_samples]
 train_target_img_paths = target_img_paths[:-val_samples]
